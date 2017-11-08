@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-navbar color="header">
+    <ion-title text-center>{{"Product" | translate}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button light class="has-icon icon-only has-badge" (click)="getCart()">
+        <span class="icon icon-bag size32 menunav"></span>
+        <ion-badge class="badge badge-light" *ngIf="values.count">{{values.count}}
+        </ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="product-page">
+  <ion-spinner *ngIf="!product" name="crescent">
+  </ion-spinner>
+  <div *ngIf="product" class="product-details">
+    <div *ngIf="product.product.images">
+      <ion-slides pager="true" loop="false" autoplay="15800">
+        <ion-slide *ngFor="let item of product.product.images">
+          <img src="{{item.src}}">
+          <h2 *ngIf="!product.product.in_stock" item-right class="stock" color="danger">{{"OUTOFSTOCK" | translate}}
+      </h2>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <ion-item class="product-name">
+      <ion-label>
+        {{product.product.title}}
+      </ion-label>
+      <div item-right style="color:#33d7b2; text-align:right;">{{product.product.price}}€
+        <br><span>I.V.A. Incluido</span>
+      </div>
+      <!--<span item-right *ngIf='product.product.average_rating' class="rating">
+        <span class="star-icon" [ngClass]="{full: product.product.average_rating >= 1, half: product.product.average_rating == 0.5}">&#x2605;
+        </span>
+        <span class="star-icon" [ngClass]="{full: product.product.average_rating >= 2, half: product.product.average_rating == 1.5}">&#x2605;
+        </span>
+        <span class="star-icon" [ngClass]="{full: product.product.average_rating >= 3, half: product.product.average_rating == 2.5}">&#x2605;
+        </span>
+        <span class="star-icon" [ngClass]="{full: product.product.average_rating >= 4, half: product.product.average_rating == 3.5}">&#x2605;
+        </span>
+        <span class="star-icon" [ngClass]="{full: product.product.average_rating >= 5, half: product.product.average_rating == 4.5}">&#x2605;
+        </span>
+      </span>-->
+    </ion-item>
+    <!--<ion-item class="stock-label-size" no-lines>
+      <div style="color:#33d7b2;">Price: {{product.product.price | currency:values.currency:true:'1.2-2'}}
+      </div>
+
+
+    div *ngFor="let item of values.wishlistItems; let i=index">
+      <h2 *ngIf="values.isLoggedIn && product.product.id == values.wishlistItems[i].id" item-right class="wishlist" color="danger" (click)="addToWishlist(product.product.id)">
+      <ion-icon ios="ios-heart" md="md-heart"></ion-icon>
+      </h2>
+      <h2 *ngIf="values.isLoggedIn && product.product.id != values.wishlistItems[i].id" item-right class="wishlist" color="danger" (click)="addToWishlist(product.product.id)">
+      <ion-icon ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+      </h2>
+      </div-->
+
+      <!--<h2 *ngIf="values.wishlistId[product.product.id]" item-right class="wishlist" color="danger" (click)="removeFromWishlist(product.product.id)">
+      <ion-icon ios="ios-heart" md="md-heart"></ion-icon>
+      </h2>
+      <h2 *ngIf="!values.wishlistId[product.product.id]" item-right class="wishlist" color="danger" (click)="addToWishlist(product.product.id)">
+      <ion-icon ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+      </h2>
+     
+
+
+    </ion-item>-->
+    <!--variation product starts-->
+    <div *ngIf="product?.product?.variations.length && product.product.in_stock" class="variation-product"  text-center>
+      <ion-item class="variation-title">
+        <strong>{{"Options"| translate}}
+        </strong>
+      </ion-item>
+      <ion-item class="seleccionar-talla">
+        <ion-label>           
+          {{"Variation" | translate}}
+        </ion-label>
+        <ion-select [(ngModel)]="options[0]" (ngModelChange)="chnageProduct()">
+          <div *ngFor="let option of product.product.variations">
+            <div *ngIf="option.attributes.length == 1">
+              <ion-option value="{{'variation_id:' + option.id + ':variation[attribute_pa_'+ option.attributes[0].name +']:' + option.attributes[0].option}}">{{option.attributes[0].option | uppercase}} 
+              </ion-option>
+            </div>
+            <div *ngIf="option.attributes.length == 2">
+              <ion-option value="{{'variation_id:' + option.id + ':variation[attribute_pa_'+ option.attributes[0].name +']:' + option.attributes[0].option + ':variation[attribute_pa_'+ option.attributes[1].name +']:' + option.attributes[1].option}}">{{option.attributes[0].option | uppercase}} - {{option.attributes[1].option | uppercase}}
+              </ion-option>
+            </div>
+          </div>
+        </ion-select>           
+      </ion-item>
+    </div>
+    <div class="add-to-cart-button" *ngIf="product.product.in_stock">
+      <button ion-button full color="button-color" [disabled]='disableSubmit' (click)="addToCart(product.product.id)">        
+          <img src="assets/image/shopping_bag.png" width='25px' style="margin-right:5px;"> Añadir a la cesta
+      </button>
+    </div>
+    <div text-center style="font-size:large;font-weight:bolder;">
+      Envío gratis
+    </div>
+    <!-- MARCA -->
+    <div *ngIf="product.product.short_description">
+      <ion-item no-lines class="item-background" (click)="mostrarmarca()">
+          <ion-icon name="add-circle"*ngIf="!marca"></ion-icon>
+          <ion-icon name="remove-circle" *ngIf="marca"></ion-icon> {{"ShortDescription" | translate}} 
+      </ion-item>
+      <ion-item text-wrap  no-lines class="item-contenido" *ngIf="marca">
+        <div [innerHTML]="product.product.short_description">
+        </div>
+      </ion-item>
+    </div>
+    <!-- DESCRIPCION -->
+    <div *ngIf="product.product.description">
+      <ion-item no-lines class="item-background" (click)="mostrardescripcion()">
+          <ion-icon name="add-circle"*ngIf="!descripcion"></ion-icon>
+          <ion-icon name="remove-circle" *ngIf="descripcion"></ion-icon> {{"Description" | translate}} 
+      </ion-item>
+      <ion-item text-wrap  no-lines class="item-contenido" *ngIf="descripcion">
+        <div [innerHTML]="product.product.description">
+        </div>
+      </ion-item>
+    </div>
+    <!-- COMPOSICION -->
+    <!--div >
+      <ion-item no-lines class="item-background" (click)="mostrarcuidados()">
+          <ion-icon name="add-circle" *ngIf="!cuidados"></ion-icon>
+          <ion-icon name="remove-circle" *ngIf="cuidados"></ion-icon>  Composición y cuidados 
+      </ion-item>
+      <ion-item text-wrap  no-lines class="item-contenido" *ngIf="cuidados">
+          <div [innerHTML]="product.product.short_description">
+          </div>
+      </ion-item>
+    </div-->
+    <!-- CAMBIOS -->
+    <div >
+      <ion-item no-lines class="item-background" (click)="mostrarcambios()">
+          <ion-icon name="add-circle"*ngIf="!cambios"></ion-icon>
+          <ion-icon name="remove-circle" *ngIf="cambios"></ion-icon> Cambios y devolución 
+      </ion-item>
+      <ion-item text-wrap  no-lines class="item-contenido" *ngIf="cambios">
+        <div>
+            <span style="text-decoration: underline;">Envíos</span><br>
+            <div style="font-size:small;">
+            Los envíos son GRATUITOS (para entregas en España, excluyendo a Ceuta, Melilla y las Islas Canarias) y se realizará en un periodo máximo de 1 a 5 días laborables.
+            <br>
+            Para entregas en Ceuta, Melilla, Islas Canarias o fuera de España, por favor, ponte en contacto con nosotros en info@exercia.es y haremos todo lo posible por satisfacerte.
+            </div>
+            <br><span style="text-decoration: underline;">Cambios y devoluciones</span><br>
+            <div style="font-size:small;">
+            Con carácter general, se podrán realizar cambios o devoluciones de productos hasta 14 días después de la fecha en la que hubieses recibido tu pedido. Ponte en contacto con nosotros en info@exercia.es y te indicaremos cómo hacerlo.
+            <br>
+            Para más información, puedes leer los <a (click)="terms()">{{"TermsConditions" | translate}}</a>. 
+            </div>
+        </div>
+      </ion-item>
+    </div>
+    <!-- REVIEWS -->
+    <div *ngIf="reviews?.product_reviews.length">
+      <ion-row class="item-background">
+        <ion-col>
+          <!--button ion-button  *ngIf="!reviews" color="button-color" button small clear (click)="getReviews()" style="margin-bottom:0px">{{"ShowReviews" | translate}}
+          </button-->
+          <button ion-button *ngIf="reviews" color="button-color" button small clear class="review-title">{{"Reviews" | translate}}
+          </button>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+      <div  *ngFor="let item of reviews.product_reviews" class="reviews">
+          <ion-item no-lines>
+            <ion-avatar item-start style="margin:8px">
+            <img src="https://www.gravatar.com/avatar/{{item.avatar}}">
+            </ion-avatar>
+             <h3 style="margin-bottom:6px;font-size:15px">{{item.reviewer_name}}
+             <span class="rating review-star">
+             <span class="star-icon" [ngClass]="{full: item.rating >= 1, half: item.rating == 0.5}">&#x2605;</span>
+             <span class="star-icon" [ngClass]="{full: item.rating >= 2, half: item.rating == 1.5}">&#x2605;</span>
+             <span class="star-icon" [ngClass]="{full: item.rating >= 3, half: item.rating == 2.5}">&#x2605;</span>
+             <span class="star-icon" [ngClass]="{full: item.rating >= 4, half: item.rating == 3.5}">&#x2605;</span>
+             <span class="star-icon" [ngClass]="{full: item.rating >= 5, half: item.rating == 4.5}">&#x2605;</span>
+             </span></h3>
+    
+             <!--h3 style="color:#9e9898">{{item.email}}</h3-->
+             <h3 style="color:#9e9898;margin-bottom:4px">{{item.created_at | date:'medium'}}</h3>
+          </ion-item>
+          <p text-wrap>{{item.review}}</p>
+      </div>    
+    </div>
+  </div>
+  <br>
+</ion-content>

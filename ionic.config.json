@@ -1,0 +1,8 @@
+{
+  "name": "Blazer",
+  "app_id": "9c6ce92b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

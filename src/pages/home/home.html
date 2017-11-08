@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar color="header">
+    <button ion-button menuToggle>
+      <ion-icon name="menu">
+      </ion-icon>
+    </button>
+    <ion-title text-center>
+      <img width=70% src="{{logo}}">
+    </ion-title>
+    <ion-buttons end>
+      <!--<button ion-button icon-only light color="shadowlite" (click)="getSearch()">
+        <ion-icon ios="ios-search" md="md-search">
+        </ion-icon>
+      </button>-->
+      <button ion-button light class="has-icon icon-only has-badge" (click)="getCart()">
+        <span class="icon icon-bag size32 menunav"></span>
+        <ion-badge class="badge badge-light" *ngIf="values.count != 0">{{values.count}}
+        </ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="home">
+    <ion-spinner *ngIf="!service?.banners" name="crescent">
+    </ion-spinner>
+  
+  <div *ngIf="service?.categories">
+    <!--<div class="shop-name">
+      <ion-item no-lines text-center>
+        <b color="side-heading-color" text-uppercase>{{"Shop"| translate}}
+        </b>
+      </ion-item>
+    </div>-->
+    <div *ngIf="service.mainCategories" class="main-categories">
+      <ion-row class="row unlimited-items">
+        <ion-col class="col" *ngFor="let item of service.mainCategories">
+          <a (click)="getCategory(item.id, item.slug)">
+            <ion-card>
+              <ion-card-content>
+                <img src="{{item.image}}"/>
+              </ion-card-content>
+              <div text-center >
+                <ion-label text-uppercase >{{item.name}}
+                </ion-label>
+              </div>
+            </ion-card>
+          </a>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+  <div class="ir_armario">
+    <button ion-button full>
+        <span class="icon icon-hanger botonizq"></span> Ir a mi armario
+    </button>
+  </div>
+</ion-content>

@@ -1,0 +1,124 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+@import "ionic.globals";
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+$text-color:        #000;
+$background-color:  #fff;
+
+//ICONOS
+//FUENTE
+@font-face {
+  font-family: Montserrat_app;
+  src: url("../assets/fonts/Montserrat-Regular.ttf");
+  }
+  
+body, span, button, h1, h2, h3, h4, h5, h6, p, ion-item, ion-title {
+  font-family: 'Montserrat_app' !important;
+  }
+  $font-family-base: 'Montserrat_app';
+  $font-family-ios-base: 'Montserrat_app';
+  $font-family-md-base: 'Montserrat_app';
+  $font-family-wp-base: 'Montserrat_app';
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #33d7b2,
+  secondary:  #33d7b2,
+  danger:     #33d7b2,
+  light:      #f4f4f4,
+  dark:       #222222,
+
+  //color options
+  darkpink:   #bf4080,
+  darkpinklite: #f9ebf2,
+
+  skyblue:    #50b7c0,
+  skybluelite:#daeff1,
+
+  red:        #33d7b2,
+  redlite:    #fdcece,
+
+  blue:       #3b5998,
+  bluelite:   #dae1f1,
+  
+
+  //customise header color here
+  header:     #f9f9f9,
+
+  //customise button color here
+  button-color: #33d7b2,
+
+  //customise text color here
+  side-heading-color:  #f53d3d,
+
+
+);
+
+  //customise header color here
+  $header:     #f9f9f9;
+
+  //customise button color here
+  $button-color: #33d7b2;
+
+  //customise toggle-button color here
+  $toggle-button-color: #f53d3d;
+
+  //customise text color here
+  $side-heading-color:  #f53d3d;
+
+
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+@import "icomoon.scss";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+$ionicons-font-path: "../assets/fonts";
+@import "ionicons";
